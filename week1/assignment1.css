@@ -62,7 +62,7 @@ body{
  .promotion{
     display: flex;
     flex: none;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     width:calc((100% - 40px) / 3);
     height: 50px;
     background-color: #add8e6;
@@ -96,7 +96,6 @@ body{
     flex: none;
     width:calc((100% - 40px) / 3);
     height: 200px;
-    margin-bottom: 20px;
     position: relative;
     text-align: center;
     img{
@@ -195,6 +194,9 @@ body{
  @media(max-width:1200px){
     .top-column,.bottom-column{
         flex-wrap: wrap;
+     }
+     .top-column{
+         row-gap: 0px;
      }
     .main{
         width: 90%;
