@@ -87,7 +87,6 @@ body{
  .bottom-column{
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
     gap: 20px; 
     
 }
@@ -97,7 +96,6 @@ body{
     width:calc((100% - 40px) / 3);
     height: 200px;
     position: relative;
-    text-align: center;
     img{
         object-fit: cover;
         width: 100%;
@@ -110,7 +108,6 @@ body{
     width: 183px;
     height: 200px;
     position: relative;
-    text-align: center;
     img{
         object-fit: cover;
         width: 100%;
@@ -122,6 +119,7 @@ body{
     height: 28px;
     width: 100%;
     line-height: 28px;
+    text-align: center;
     position: absolute;
     bottom: 0;
     background-color:rgba(229, 255, 229,0.5);
