@@ -10,14 +10,17 @@ function findAndPrint(messages, currentStation){
 
     if(mainLine.includes(currentStation) && mainLine.includes(friendLoc[i])){
       distArr.push(Math.abs(currentIndex - friendIndex));    
-      } 
+    } 
+    else if(currentStation == "Xiaobitan" && friendLoc[i] == "Xiaobitan"){
+      distArr.push(0);
+    }
     else if(currentStation == "Xiaobitan"){
       distArr.push(Math.abs(friendIndex - mainLine.indexOf("Qizhang")) + 1);
-      }
+    }
     else{
       distArr.push(Math.abs(currentIndex - mainLine.indexOf("Qizhang")) + 1);
-      }
     }
+  }
     const nearest = distArr.reduce(function (min, dist) {
       if(min < dist){
         return min;
