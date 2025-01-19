@@ -7,6 +7,8 @@ def find_and_print(messages, current_station):
     for friend_station in friend_loc:
         if current_station in main_line and friend_station in main_line:
             dist_arr.append(abs(main_line.index(current_station) - main_line.index(friend_station)))
+        elif current_station == "Xiaobitan" and friend_station == "Xiaobitan":
+            dist_arr.append(0)
         elif current_station == "Xiaobitan":
             dist_arr.append(abs(main_line.index(friend_station) - main_line.index("Qizhang")) + 1)
         else:
