@@ -1,0 +1,268 @@
+body{
+    font-size: 20px; /*整份文件除標題的base font-size*/
+    margin: 0 0 100px 0; /*清除body預設margin 8px，並在底部留白100px*/
+ }
+ .navbar{
+   height:50px;
+   display: flex;
+   align-items: center;
+   padding-inline: 8px; /*設置行內的左右內邊距，上下內邊距用 padding-block*/
+
+ }
+ .headline{
+    flex: none;
+    width: 50%;
+    font-weight: bold;
+     
+ }
+ .desktop-menu{
+    display: flex;
+    flex: none;
+    justify-content: flex-end;
+    width: 50%;
+    gap:20px;
+
+ }
+ .mobile-menu{
+    display: none;
+
+ }
+ .menu-toggle{
+    display: none;
+
+ }
+ .item{
+    flex: none;
+ 
+ }
+ .welcome{
+    background-color:#add8e6;
+    height: 250px;
+    width: 100%;
+    text-align: center;
+    line-height: 250px;
+    font-size: 2em;
+    font-weight: bold;
+    margin-bottom: 40px;
+
+ }
+ .main{
+    width: 1200px;
+    margin: 0 auto; /*置中固定寫法*/
+    
+ }
+ 
+ .top-column{
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+ }
+
+ .promotion{
+    display: flex;
+    flex: none;
+    width:calc((100% - 40px) / 3); /*在扣掉gap的情況下平均分配空間*/
+    height: 50px;
+    background-color: #add8e6;
+    align-items: center;
+    margin-bottom: 20px;
+ }
+ .imgbox{ /*利用object-fit把圖片等比縮限在一個容器的範圍內*/
+    flex: none;
+    margin-right: 7px;
+    width: 80px;
+    height: 50px;
+    
+    img{
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+     }   
+ }
+ 
+ .word{
+    flex: none;
+ }
+ 
+ .bottom-column{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    
+}
+
+ .large-box{
+    flex: none;
+    width:calc((100% - 40px) / 3);
+    height: 200px;
+    position: relative; /*綠色title方塊設為「絕對位置」的參考點*/
+    img{
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+     }
+    }
+
+ .small-box{
+    flex:none;
+    width: 183px; /*計算機計算*/
+    height: 200px;
+    position: relative;
+    img{
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+     }
+ }
+ 
+ .text-block-large,.text-block-small{
+   display: flex;
+   align-items: center;
+   height: 28px;
+   width: 100%;
+   position: absolute;
+   text-align:center;
+   bottom: 0; /*絕對位置，貼齊small-box和large-box底部*/
+   background-color:#E5FFE580; /*八位數含alpha值(透明度)的HEX*/
+}
+
+ .text-in-block{
+   width: 100%;
+   overflow: hidden;
+   white-space: nowrap;
+   text-overflow: ellipsis;
+   padding: 15px;
+
+   
+ }
+ 
+ .star-container{
+    position: absolute;
+    top: 8px; /*絕對位置，距small-box和large-box的上方和右側各8px，即擺在右上角*/
+    right: 8px;
+    width: 20px;
+    height: 20px;
+    opacity: 0.5;
+    img{
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+     }   
+ }
+ 
+ .menu-toggle {
+    position:fixed;
+    right:8px;
+    cursor:pointer;/*鼠標造型*/
+    width: 35px;
+    height: 35px;
+    img{
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+    }   
+  }
+  
+  
+  .mobile-menu {
+    position:fixed;
+    top: 0;
+    right: -290px; /*藏在畫面右邊，寬度250+左右padding40*/
+    width: 250px;
+    height: 100%;
+    background-color: white;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+    transition: right 0.3s ease;
+    z-index: 1000; /*z座標為1000，必定浮在網頁最上層的做法*/
+    padding: 20px;
+  }
+  
+  .mobile-menu.active {
+    right: 0;
+  }
+  
+  .mobile-menu .close {
+    text-align: right; /*X icon 靠右對齊*/
+    cursor: pointer;
+    img{
+        width:30px;
+        height:30px;
+    }
+    
+  }
+  
+  .mobile-menu .item {
+    margin-bottom: 40px;
+    font-size:1.2em;
+    text-align:center;
+  }
+ 
+ @media(max-width:1200px){
+    .top-column,.bottom-column{
+        flex-wrap: wrap;
+     }
+    .top-column{
+         row-gap: 0px;
+     }
+    .main{
+        width: 90%;
+     }
+    .promotion:nth-child(-n+2){
+        width:calc((100% - 20px) / 2);
+     }
+    .promotion:nth-child(3){
+        width:100%;
+     }
+    .large-box,.small-box{
+        width:calc((100% - 60px) / 4);
+     } 
+    .small-box:nth-last-child(-n+2){
+        width:calc((100% - 20px) / 2);
+     }
+    .menu-toggle{
+        display:none;
+    } 
+
+
+     
+ }
+ 
+ @media(max-width:600px){
+    .top-column,.bottom-column{
+        flex-wrap: wrap;
+     }
+     .main{
+        width: 90%;
+     }
+    .promotion:nth-child(-n+3){
+        width: 100%;
+     }
+    .large-box,.small-box{
+        width: 100%
+     } 
+    .small-box:nth-last-child(-n+2){
+        width: 100%;
+        display: inline-block; 
+     } 
+    .welcome{
+        font-size:1.5em;
+    }
+    .desktop-menu{
+        display: none
+     }
+    .mobile-menu{
+        display: block;
+     }
+    .menu-toggle{
+        display:block;
+        position:absolute;
+
+    }
+    .navbar{
+      position: relative
+    }
+ }
+
+ 
+
+
