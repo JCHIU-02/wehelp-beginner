@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block main %}
+<div class="content-block">
+    <p class="login-title">登入系統</p>
+    <form id='form' action='/signin' method='POST'>
+        <div class="username">
+            <label for="username">帳號</label>
+            <input type="text" name="username"/>
+        </div>
+        <div class="password">
+            <label for="password">密碼</label>
+            <input type="password" name="password"/>
+        </div>
+        <div class="agree">
+            <p>同意條款</p>
+            <input type="checkbox" id="checkbox">
+        </div>
+        <button>登入</button>
+    </form>
+</div>
+<hr>
+<div class="calculator">
+    <p class="cal-title">計算正整數的平方</p>
+    <form id='cal-form'>
+        <label for="int">正整數</label>
+        <input type="text" id ="number" name="number"/>
+        <div>
+            <button class="cal-btn">計算</button>
+        </div>
+    </form>
+
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+    const form = document.getElementById("form");
+    const checkbox = document.getElementById("checkbox");
+    form.addEventListener("submit", signin => {
+        if (!checkbox.checked) {
+            signin.preventDefault();
+            alert("Please check the checkbox first.");
+        }
+    });
+    const calForm = document.getElementById("cal-form");
+    calForm.addEventListener("submit", calculate => {
+        const number = document.getElementById('number').value;
+        if (Number.isInteger(Number(number)) && Number(number) > 0)  {
+            calculate.preventDefault();
+            window.location.href = `/square/${number}`;
+        }
+        else{
+            calculate.preventDefault();
+            alert("Please enter a positive number.");
+        }
+    }
+    )
+</script>
+{% endblock %}
