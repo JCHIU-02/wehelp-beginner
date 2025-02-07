@@ -1,0 +1,68 @@
+body{
+    margin: 0;
+    font-size: 24px
+}
+.welcome-block{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background-color: #102b6a;
+}
+
+.welcome-title{
+    color: white;
+    font-size: 32px;
+}
+
+.login-title{
+    font-weight: bold;
+}
+
+.content-block{
+    width: 100%;
+    height: 250px;
+    text-align: center;
+}
+
+input{
+    vertical-align: middle; 
+}
+
+.agree{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+}
+
+label{
+    font-size: 20px;
+}
+
+.calculator{
+    text-align: center;
+}
+
+.cal-title{
+    margin-top: 35px;
+    font-weight: bold;
+}
+
+.cal-btn{
+    margin-top:30px;
+}
+
+hr{
+    border: 1px solid #e0e0e0
+}
+
+.success, .error, .square{
+    text-align: center;
+    margin-top: 60px;
+}
+
+.square{
+    font-size: 30px;
+}
