@@ -8,7 +8,7 @@
   ```SQL
   CREATE DATABASE website;
   ```
-  ![website_database](/images/website_database.png)
+  ![website_database](images/website_database.png)
 
 ### 2. Create a new table named member in the website database, designed as instruction.
   ```SQL
