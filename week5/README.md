@@ -4,7 +4,7 @@
 - Install MySQL Server.
 
 ## Task 2
-### 1. Create a new database named website.
+- Create a new database named website.
   ```SQL
   CREATE DATABASE website;
   ```
