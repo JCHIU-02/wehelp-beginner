@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block main %}
+<div class="signup-block">
+    <p class="signup-title">註冊帳號</p>
+    <form id='signup-form' action='/signup' method='POST'>
+        <div class="name">
+            <label for="name">姓名</label>
+            <input type="text" name="name" required/>
+        </div>
+        <div class="username">
+            <label for="username">帳號</label>
+            <input type="text" name="username" required/>
+        </div>
+        <div class="password">
+            <label for="password">密碼</label>
+            <input type="password" name="new_password" required/>
+        </div>
+        <button class="signup-btn">註冊</button>
+    </form>
+</div>
+<hr>
+<div class="signin-block">
+    <p class="signin-title">登入系統</p>
+    <form id='signin-form' action="/signin" method="POST">
+        <div>
+            <label for="int">帳號</label>
+            <input type="test" name="account"/>
+        <div>
+        <div>
+            <label for="int">密碼</label>
+            <input type="password" name="password"/>
+        </div>
+        <button class="login-btn">登入</button>
+    </form>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+    const form = document.getElementById("form");
+    const checkbox = document.getElementById("checkbox");
+    form.addEventListener("submit", signin => {
+        if (!checkbox.checked) {
+            signin.preventDefault();
+            alert("Please check the checkbox first.");
+        }
+    });
+    const calForm = document.getElementById("cal-form");
+    calForm.addEventListener("submit", calculate => {
+        const number = document.getElementById('number').value;
+        if (Number.isInteger(Number(number)) && Number(number) > 0)  {
+            calculate.preventDefault();
+            window.location.href = `/square/${number}`;
+        }
+        else{
+            calculate.preventDefault();
+            alert("Please enter a positive number.");
+        }
+    }
+    )
+</script>
+{% endblock %}
