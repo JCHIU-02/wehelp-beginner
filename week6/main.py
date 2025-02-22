@@ -17,17 +17,7 @@ cnx = mysql.connector.connect(
     host = 'localhost',
     database = 'website'
     )
-
-def create_user_list():
-    with cnx.cursor(buffered=True) as cursor:
-        cursor.execute("SELECT username FROM member")
-        usernames = cursor.fetchall()
-        existed_user = []
-        for user in usernames:
-            existed_user.append(user[0])
-    return existed_user
     
-
 @app.get("/")
 async def home(request: Request):
     return templates.TemplateResponse(
@@ -46,15 +36,17 @@ async def create_account(
     new_password: Annotated[str, Form()]
     ):
 
-    user_list = create_user_list()
-    if username in user_list:
-        return RedirectResponse("/error?message=帳號已被註冊，請重新輸入", status_code = 303)
+    with cnx.cursor(buffered=True) as cursor:
+        cursor.execute('SELECT username FROM member WHERE username = %s', (username,))
+        existed_user = cursor.fetchone()
     
-    else:
-        with cnx.cursor(buffered=True) as cursor:
+        if existed_user == None:
             cursor.execute('INSERT INTO member(name, username, password) VALUES(%s, %s, %s)', (name, username, new_password))
             cnx.commit()
             return RedirectResponse("/", status_code = 303)
+        
+        else:
+            return RedirectResponse("/error?message=帳號已被註冊，請重新輸入", status_code = 303)  
         
 
 @app.post("/signin")
@@ -69,20 +61,13 @@ async def verify(
     
     with cnx.cursor(buffered=True) as cursor:
 
-        cursor.execute("SELECT password FROM member WHERE username = %s", (account,))
-        correct_password = cursor.fetchone()
+        cursor.execute("SELECT id, name, username, password FROM member WHERE username = %s", (account,))
+        correct_user_data = cursor.fetchone()
 
-        cursor.execute("SELECT name FROM member WHERE username = %s", (account,))
-        current_name = cursor.fetchone()
-
-        cursor.execute("SELECT id FROM member WHERE username = %s", (account,))
-        current_id = cursor.fetchone()
-
-        user_list = create_user_list()
-        if account in user_list and password == correct_password[0]:
+        if account == correct_user_data[2] and password == correct_user_data[3]:
             request.session["user"] = account
-            request.session["name"] = current_name[0]
-            request.session["member_id"] = current_id[0]
+            request.session["name"] = correct_user_data[1]
+            request.session["member_id"] = correct_user_data[0]
             return RedirectResponse("/member", status_code = 303)
         else:
             return RedirectResponse("/error?message=帳號或密碼輸入錯誤", status_code = 303)
@@ -146,7 +131,6 @@ async def signout(request: Request):
 
 @app.post("/createMessage")
 async def add_comment(comment: Annotated[str, Form()], request: Request):
-    # 將留言存入資料庫
     member_id = request.session.get("member_id")
     with cnx.cursor(buffered=True) as cursor:
         cursor.execute("INSERT INTO message(member_id, content) VALUES(%s, %s)", (member_id, comment))
