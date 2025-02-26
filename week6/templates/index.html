@@ -45,18 +45,5 @@
             alert("Please check the checkbox first.");
         }
     });
-    const calForm = document.getElementById("cal-form");
-    calForm.addEventListener("submit", calculate => {
-        const number = document.getElementById('number').value;
-        if (Number.isInteger(Number(number)) && Number(number) > 0)  {
-            calculate.preventDefault();
-            window.location.href = `/square/${number}`;
-        }
-        else{
-            calculate.preventDefault();
-            alert("Please enter a positive number.");
-        }
-    }
-    )
 </script>
 {% endblock %}
