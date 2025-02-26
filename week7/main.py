@@ -31,15 +31,12 @@ async def get_member_data(username: str, request: Request):
     with cnx.cursor(buffered=True) as cursor:
         cursor.execute("SELECT id, name FROM member WHERE username=%s",(username,))
         user_data = cursor.fetchone()
-    
-    if request.session.get("user") == None:
         cnx.close()
-        return RedirectResponse("/error?message=請先登入再查詢")
-
-    elif user_data is None:
+    
+    if request.session.get("user") is None or user_data is None:
         return{
             "data": None
-        }
+        }     
     
     else:
         return{
@@ -58,21 +55,20 @@ async def update_name(name_update: UpdateName, request: Request):
     cnx = create_db_connection()
     username = request.session.get("user")
 
-    with cnx.cursor(buffered=True) as cursor:
-        cursor.execute("UPDATE member SET name=%s WHERE username=%s",(new_name, username))
-        cnx.commit()
+    try:
+        with cnx.cursor(buffered=True) as cursor:
+            cursor.execute("UPDATE member SET name=%s WHERE username=%s",(new_name, username))
+            cnx.commit()
+            cnx.close()
 
-        cursor.execute("SELECT name FROM member WHERE username=%s", (username,))
-        updated_name = cursor.fetchone()
-
-        if updated_name[0] == new_name:
             return{
                 "ok": True
             }
-        else:
-            return{
-                "error": True
-            }
+    
+    except:
+        return{
+            "error": True
+        }
     
     
 @app.get("/")
