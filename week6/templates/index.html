@@ -34,16 +34,3 @@
     </form>
 </div>
 {% endblock %}
-
-{% block script %}
-<script>
-    const form = document.getElementById("form");
-    const checkbox = document.getElementById("checkbox");
-    form.addEventListener("submit", signin => {
-        if (!checkbox.checked) {
-            signin.preventDefault();
-            alert("Please check the checkbox first.");
-        }
-    });
-</script>
-{% endblock %}
