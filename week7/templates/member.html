@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block main %}
+<div class="success">
+    <p id="user-welcome">{{name}}，歡迎登入系統</p>
+    <a href="/signout">登出系統</a>
+</div>
+<hr>
+<div class="search-user">
+    <p class="search-title">查詢會員姓名</p>
+    <form class="member-page-form" id="search-form" onsubmit='getData(event)'>
+        <input class="member-page-input" id="username-input" type="text" name="username" required/>
+        <button class="submit-btn">查詢</button>
+    </form>
+    <p class="result" id="display-name"></p>       
+</div>
+<div class="update-name">
+    <p class="update-title">更新我的姓名</p>
+    <form class="member-page-form" id="update-form" onsubmit='updateName(event)'>
+        <div>
+            <input class="member-page-input" id="update-input" type="text" required/>
+            <button class="submit-btn">更新</button>
+        </div>    
+    </form>
+    <p class="result" id="update-status"></p>   
+</div>
+{% endblock %}
+{% block script %}
+<script>
+    function getData(event){
+        event.preventDefault()
+        const username = document.getElementById('username-input').value
+        document.getElementById('search-form').reset()
+        fetch(`http://127.0.0.1:8000/api/member?username=${username}`)
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (userData) {
+            if(userData['data'] != null){
+                document.getElementById('display-name').textContent = `${userData['data']['name']} (${username})`;
+            }
+            else{
+                document.getElementById('display-name').textContent = "查無此人";
+            }
+
+         });     
+    }
+
+    function updateName(event){
+        event.preventDefault()
+        const newName = document.getElementById('update-input').value
+        document.getElementById('update-form').reset()
+        fetch("http://127.0.0.1:8000/api/member",{
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                'name': newName
+            })
+        })
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (status) {
+            if(status['ok']){
+                document.getElementById("update-status").textContent = "更新成功";
+                document.getElementById('user-welcome').textContent = `${newName}，歡迎登入系統`
+            }
+            else{
+                document.getElementById("update-status").textContent = "更新失敗"
+            }
+        
+    })
+}
+    
+</script>
+{% endblock %}
+
+
