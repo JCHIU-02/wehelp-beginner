@@ -60,11 +60,12 @@ async def update_name(name_update: UpdateName, request: Request):
             cursor.execute("UPDATE member SET name=%s WHERE username=%s",(new_name, username))
             cnx.commit()
             cnx.close()
-
+    
+        if cursor.rowcount == 1:
             return{
                 "ok": True
             }
-    
+        
     except:
         return{
             "error": True
