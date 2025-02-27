@@ -55,21 +55,26 @@ async def update_name(name_update: UpdateName, request: Request):
     cnx = create_db_connection()
     username = request.session.get("user")
 
-    try:
-        with cnx.cursor(buffered=True) as cursor:
-            cursor.execute("UPDATE member SET name=%s WHERE username=%s",(new_name, username))
-            cnx.commit()
-            cnx.close()
-    
-        if cursor.rowcount == 1:
+    if username is not None:
+        try:
+            with cnx.cursor(buffered=True) as cursor:
+                cursor.execute("UPDATE member SET name=%s WHERE username=%s",(new_name, username))
+                cnx.commit()
+                cnx.close()
+            
+            if cursor.rowcount == 1:
+                return{
+                    "ok": True
+                }
+        except:
             return{
-                "ok": True
+                "error": True
             }
-        
-    except:
+    
+    else:
         return{
-            "error": True
-        }
+                "error": True
+            }
     
     
 @app.get("/")
